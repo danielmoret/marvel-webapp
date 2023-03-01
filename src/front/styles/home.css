@@ -6,7 +6,7 @@
     on that page only (the ones not reused in other pages).
 */
 
-.card {
+.card-home {
   height: 100vh;
   background-repeat: no-repeat;
   background-size: cover;
@@ -20,6 +20,6 @@
   -webkit-text-stroke: 1px black;
 }
 
-.btn {
+.btn-home {
   font-size: 2vw;
 }

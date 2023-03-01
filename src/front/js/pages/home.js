@@ -12,7 +12,7 @@ export const Home = () => {
   return (
     <div>
       <div
-        className="card text-bg-dark border-0"
+        className="card card-home text-bg-dark border-0"
         style={{
           backgroundImage: `url(
           "https://i.pinimg.com/originals/4f/4d/da/4f4ddacf4ac20f9c6af4444779ed40e0.jpg"
@@ -26,10 +26,10 @@ export const Home = () => {
           </div>
           <div className="d-flex justify-content-center gap-2">
             <Link to="/login">
-              <button className="btn btn-dark btn-lg">Log In</button>
+              <button className="btn btn-home btn-dark btn-lg">Log In</button>
             </Link>
             <Link to="/signup">
-              <button className="btn btn-dark btn-lg">Signup</button>
+              <button className="btn btn-home btn-dark btn-lg">Signup</button>
             </Link>
           </div>
         </div>

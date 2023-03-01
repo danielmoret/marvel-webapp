@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+
+import "../../styles/characters.css";
 
 export const Characters = () => {
   const [charactersData, setCharactersData] = useState({});
@@ -33,18 +36,28 @@ export const Characters = () => {
   }, []);
 
   return (
-    <div className="container">
+    <div className="container py-3">
       <div className="row">
         {characters.map((character) => (
-          <div className="col-3" key={character.id}>
-            <div className="card mt-4">
+          <div className="col-6 col-sm-6 col-md-4 col-lg-3" key={character.id}>
+            <div className="card mt-4 card-character">
               <img
                 src={`${character.thumbnail.path}.${character.thumbnail.extension}`}
                 className="card-img-top"
-                alt="..."
+                alt={character.name}
               />
               <div className="card-body">
-                <h5 className="card-title">{character.name}</h5>
+                <h5 className="card-title text-center">
+                  <b>{character.name}</b>
+                </h5>
+                <div className="btn-card d-flex justify-content-around align-items-center">
+                  <Link className="btn btn-outline-dark" to="/">
+                    Detalle
+                  </Link>
+                  <button className="btn btn-outline-warning">
+                    <i className="fa-regular fa-star btn-start"></i>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
