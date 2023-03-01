@@ -5,7 +5,7 @@ import "../../styles/navbar.css";
 
 export const Navbar = () => {
   return (
-    <nav className="navbar navbar-expand-md bg-dark py-3">
+    <nav className="navbar navbar-expand-md navbar-dark bg-dark py-3">
       <div className="container ">
         <Link to="/">
           <img src={marvelLogo} className="logo-navbar"></img>
@@ -19,15 +19,7 @@ export const Navbar = () => {
           aria-expanded="false"
           aria-label="Toggle navigation"
         >
-          <span className="navbar-toggler-icon">
-            <span className="" role="button">
-              <i
-                className="fa fa-bars"
-                aria-hidden="true"
-                style={{ color: "white" }}
-              ></i>
-            </span>
-          </span>
+          <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse " id="navbarNavAltMarkup">
           <div className="w-100 d-flex justify-content-end">

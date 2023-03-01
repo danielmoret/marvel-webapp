@@ -19,7 +19,7 @@ export const Home = () => {
         )`,
         }}
       ></div>
-      <div className="card-img-overlay d-flex justify-content-center align-items-center">
+      <div className="card-img-overlay d-flex justify-content-center align-items-center mt-5">
         <div className="d-flex flex-column gap-5 align-items-center">
           <div>
             <h1 className="title">Universo Marvel</h1>

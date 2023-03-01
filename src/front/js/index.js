@@ -1,6 +1,8 @@
 //import react into the bundle
 import React from "react";
 import ReactDOM from "react-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
+import { Tooltip, Toast, Popover } from "bootstrap";
 
 //include your index.scss file into the bundle
 import "../styles/index.css";
