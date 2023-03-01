@@ -5,3 +5,20 @@
     one more css for each page that will contain the selected used 
     on that page only (the ones not reused in other pages).
 */
+
+.card {
+  height: 100vh;
+  background-repeat: no-repeat;
+  background-size: cover;
+  opacity: 0.8;
+}
+
+.title {
+  color: white;
+  font-size: 8vw;
+  -webkit-text-stroke: 1px black;
+}
+
+.btn {
+  font-size: 2vw;
+}
