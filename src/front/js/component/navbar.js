@@ -23,19 +23,19 @@ export const Navbar = () => {
         </button>
         <div className="collapse navbar-collapse " id="navbarNavAltMarkup">
           <div className="w-100 d-flex justify-content-end">
-            <div className="navbar-nav ">
+            <div className="navbar-nav gap-3">
               <Link
                 className="nav-link text-white fw-bold"
                 aria-current="page"
                 to="/"
               >
-                Home
+                Favoritos
               </Link>
-              <Link className="nav-link text-white fw-bold" to="/">
-                Features
-              </Link>
-              <Link className="nav-link text-white fw-bold" to="/">
-                Pricing
+              <Link
+                className="nav-link text-white fw-bold btn btn-danger p-2"
+                to="/"
+              >
+                Cerrar Sesión
               </Link>
             </div>
           </div>

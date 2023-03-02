@@ -26,11 +26,13 @@ export const Home = () => {
           </div>
           <div className="d-flex justify-content-center gap-2">
             <Link to="/login">
-              <button className="btn btn-home btn-dark btn-lg">Log In</button>
+              <button className="btn btn-home btn-dark btn-lg">
+                Unete a la experiencia
+              </button>
             </Link>
-            <Link to="/signup">
+            {/* <Link to="/signup">
               <button className="btn btn-home btn-dark btn-lg">Signup</button>
-            </Link>
+            </Link> */}
           </div>
         </div>
       </div>

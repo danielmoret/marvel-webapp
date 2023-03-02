@@ -1,68 +1,26 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link } from "react-router-dom";
+import { Context } from "../store/appContext";
 
 import "../../styles/characters.css";
+import { CardCharacter } from "../component/cardCharacter";
 
 export const Characters = () => {
-  const [charactersData, setCharactersData] = useState({});
-  const [characters, setCharacters] = useState([]);
-
-  const getCharacters = async () => {
-    const API_KEY = "2e054878261f3b85a7a63c8f0b7ba8af";
-    const API_HASH = "c37b581714ab8a048c17b82c860f9483";
-    const API_TS = "1";
-    const API_URL = "http://gateway.marvel.com/v1/public";
-    try {
-      const response = await fetch(
-        `${API_URL}/characters?ts=${API_TS}&apikey=${API_KEY}&hash=${API_HASH}`
-      );
-      if (!response.ok) {
-        const error = response.json();
-        throw new Error(error.message);
-      }
-      const body = await response.json();
-      setCharactersData(body);
-      setCharacters(body.data.results);
-      console.log(body.data.results);
-      return true;
-    } catch (error) {
-      console.error(error);
-      return false;
-    }
-  };
+  const { store, actions } = useContext(Context);
 
   useEffect(() => {
-    getCharacters();
+    actions.getCharacters();
   }, []);
 
   return (
-    <div className="container py-3">
-      <div className="row">
-        {characters.map((character) => (
-          <div className="col-6 col-sm-6 col-md-4 col-lg-3" key={character.id}>
-            <div className="card mt-4 card-character">
-              <img
-                src={`${character.thumbnail.path}.${character.thumbnail.extension}`}
-                className="card-img-top"
-                alt={character.name}
-              />
-              <div className="card-body">
-                <h5 className="card-title text-center">
-                  <b>{character.name}</b>
-                </h5>
-                <div className="btn-card d-flex justify-content-around align-items-center">
-                  <Link className="btn btn-outline-dark" to="/">
-                    Detalle
-                  </Link>
-                  <button className="btn btn-outline-warning">
-                    <i className="fa-regular fa-star btn-start"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        ))}
+    <>
+      <div className="container py-3">
+        <div className="row">
+          {store.characters.map((character) => (
+            <CardCharacter character={character} key={character.id} />
+          ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
