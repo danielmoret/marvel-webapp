@@ -5,11 +5,9 @@ import { Accordion } from "../component/accordion";
 import { Context } from "../store/appContext";
 
 export const CharacterDetail = () => {
-  const { store, actions } = useContext(Context);
+  const { store } = useContext(Context);
   const params = useParams();
   const [character, setCharacter] = useState([]);
-  const [dataCharacter, setDataCharacter] = useState([]);
-  const endPoints = ["comics", "series"];
 
   const findCharacter = () => {
     const characterFind = store.characters.find(
@@ -18,29 +16,7 @@ export const CharacterDetail = () => {
     setCharacter(characterFind);
   };
 
-  // const getDataCharacter = async () => {
-  //   try {
-  //     endPoints.forEach(async (element) => {
-  //       const response = await fetch(
-  //         `${store.apiUrl}/characters/${params.id}/${element}?ts=${process.env.API_TS}&apikey=${process.env.API_KEY}&hash=${process.env.API_HASH}`
-  //       );
-  //       if (!response.ok) {
-  //         const error = response.json();
-  //         throw new Error(error.message);
-  //       }
-  //       const body = await response.json();
-  //       console.log(body.data.results);
-  //       setDataCharacter((prev) => ({ ...prev, [element]: body.data.results }));
-  //       return true;
-  //     });
-  //   } catch (error) {
-  //     console.error(error);
-  //     return false;
-  //   }
-  // };
-
   useEffect(() => {
-    //getDataCharacter();
     findCharacter();
   }, []);
 
