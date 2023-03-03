@@ -1,12 +1,24 @@
-import React from "react";
+import React, { useEffect, useContext } from "react";
+import { Context } from "../store/appContext";
 import marvelLogo from "../../img/Marvel_Logo.svg.png";
 import { Link } from "react-router-dom";
+import toast, { Toaster } from "react-hot-toast";
 import "../../styles/navbar.css";
 
 export const Navbar = () => {
+  const { store, actions } = useContext(Context);
+  useEffect(() => {
+    if (store.message.text === "") return;
+    if (store.message.type) {
+      toast.success(store.message.text);
+    } else {
+      toast.error(store.message.text);
+    }
+  }, [store.message]);
   return (
     <nav className="navbar navbar-expand-md navbar-dark bg-dark py-3">
       <div className="container ">
+        <Toaster />
         <Link to="/">
           <img src={marvelLogo} className="logo-navbar"></img>
         </Link>
