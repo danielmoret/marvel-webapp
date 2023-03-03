@@ -3,6 +3,8 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       characters: JSON.parse(localStorage.getItem("characters")) || [],
       apiUrl: "http://gateway.marvel.com/v1/public",
+      endPoints: ["characters"],
+      options: ["comics"],
     },
     actions: {
       getCharacters: async () => {
@@ -17,6 +19,7 @@ const getState = ({ getStore, getActions, setStore }) => {
               throw new Error(error.message);
             }
             const body = await response.json();
+            console.log(body.data.results);
             setStore({ characters: body.data.results });
             localStorage.setItem(
               "characters",

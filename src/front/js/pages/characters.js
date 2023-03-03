@@ -8,10 +8,6 @@ import { CardCharacter } from "../component/cardCharacter";
 export const Characters = () => {
   const { store, actions } = useContext(Context);
 
-  useEffect(() => {
-    actions.getCharacters();
-  }, []);
-
   return (
     <>
       <div className="container py-3">

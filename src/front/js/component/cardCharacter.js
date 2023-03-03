@@ -15,7 +15,10 @@ export const CardCharacter = ({ character }) => {
             <b>{character.name}</b>
           </h5>
           <div className="btn-card d-flex justify-content-around align-items-center">
-            <Link className="btn btn-outline-dark" to="/">
+            <Link
+              className="btn btn-outline-dark"
+              to={`/character/${character.id}`}
+            >
               Detalle
             </Link>
             <button className="btn btn-outline-warning">
