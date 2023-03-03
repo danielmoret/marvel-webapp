@@ -13,10 +13,11 @@ class User(db.Model):
     
 
     def __init__(self,**kwargs):
+        self.name = kwargs['name']
         self.email = kwargs['email']
         self.password = kwargs['password']
         self.salt = kwargs['salt']
-        self.role = kwargs['role']
+       
 
     def __repr__(self):
         return f'<User {self.email}>'
@@ -42,20 +43,29 @@ class User(db.Model):
         except Exception as error:
             print("error")
             raise Exception(error.args[0],400)
+    
+    @classmethod
+    def update_user(cls,kwargs):
+        db.session.add(kwargs)
+        try:
+            db.session.commit()
+            return kwargs
+        except Exception as error:
+            raise Exception(error.args[0],400)
 
     def serialize(self):
         return {
             "id": self.id,
+            "name":self.name,
             "email": self.email,
-            "role": self.role.value
-            # do not serialize the password, its a security breach
+           
         }
     
 class Favorite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     character_id = db.Column(db.Integer, nullable=False)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     
 
     def __init__(self, **kwargs):
