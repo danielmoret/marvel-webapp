@@ -1,7 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { Context } from "../store/appContext";
-import toast, { Toaster } from "react-hot-toast";
 
 import "../../styles/login.css";
 
@@ -25,7 +24,6 @@ export const Login = () => {
 
   return (
     <div className="container-login">
-      <Toaster />
       <div className="login text-center text-white">
         <h1>Iniciar Sesión</h1>
         <form onSubmit={sendData}>
@@ -76,6 +74,11 @@ export const Login = () => {
             value="Ingresar"
           />
         </form>
+        <Link to="/signup">
+          <p className="register-link text-white">
+            ¿No tienes cuenta? <b>Registrate</b>
+          </p>
+        </Link>
       </div>
     </div>
   );

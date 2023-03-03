@@ -11,15 +11,43 @@ const getState = ({ getStore, getActions, setStore }) => {
     },
 
     actions: {
-      syncTokenFromSessionStore: () => {
+      syncToken: () => {
         const token = localStorage.getItem("token");
+        const name = localStorage.getItem("name");
 
         if (token && token != "" && token != undefined)
           setStore({ token: token });
+        if (name && token != "") setStore({ name: name });
       },
 
       toggleMessage: (text, type) => {
         setStore({ message: { text: text, type: type } });
+      },
+
+      signup: async (data) => {
+        const opts = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        };
+
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/user`,
+            opts
+          );
+          if (!response.ok) {
+            const error = response.json();
+            throw new Error(error.message);
+          }
+          const data = response.json();
+          return true;
+        } catch (error) {
+          console.error(error);
+          return false;
+        }
       },
 
       login: async (email, password) => {
@@ -45,6 +73,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
           const data = await response.json();
           localStorage.setItem("token", data.token);
+          localStorage.setItem("name", data.name);
           setStore({ token: data.token });
           setStore({ name: data.name });
           return true;

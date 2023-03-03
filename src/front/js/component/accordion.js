@@ -1,7 +1,6 @@
 import React from "react";
 
 export const Accordion = ({ body, title, id, type }) => {
-  console.log(body);
   return (
     <>
       <div className="accordion-item">

@@ -36,3 +36,14 @@
   margin-top: 0.9375rem;
   font-weight: 600;
 }
+
+a:link {
+  text-decoration: none;
+}
+a:visited {
+  text-decoration: none;
+}
+
+.register-link {
+  padding-top: 0.8rem;
+}
