@@ -39,6 +39,13 @@ export const Navbar = () => {
               <Link
                 className="nav-link text-white fw-bold"
                 aria-current="page"
+                to="/characters"
+              >
+                <i className="fa-solid fa-house"></i>
+              </Link>
+              <Link
+                className="nav-link text-white fw-bold"
+                aria-current="page"
                 to="/favorites"
               >
                 Favoritos
@@ -48,7 +55,7 @@ export const Navbar = () => {
                 aria-current="page"
                 to="/profile"
               >
-                Profile
+                Perfil
               </Link>
               <button
                 className="nav-link text-white fw-bold btn btn-danger p-2"

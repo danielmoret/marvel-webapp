@@ -1,0 +1,12 @@
+.input-search {
+  border: none;
+  border-bottom: 2px solid black;
+}
+
+.input-search:focus {
+  outline: none;
+}
+
+.input-search:active {
+  outline: none;
+}

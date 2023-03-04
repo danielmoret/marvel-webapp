@@ -9,6 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       options: ["comics"],
       favorites: [],
       message: { text: "", type: false },
+      searchValue: "",
     },
 
     actions: {
@@ -253,6 +254,10 @@ const getState = ({ getStore, getActions, setStore }) => {
           actions.toggleMessage("No se pudo eliminar de favoritos", false);
           return false;
         }
+      },
+
+      changeSearchValue: (value) => {
+        setStore({ searchValue: value });
       },
     },
   };
