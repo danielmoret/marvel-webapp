@@ -39,7 +39,7 @@ export const Navbar = () => {
               <Link
                 className="nav-link text-white fw-bold"
                 aria-current="page"
-                to="/"
+                to="/favorites"
               >
                 Favoritos
               </Link>

@@ -6,7 +6,11 @@ export const CardCharacter = ({ character }) => {
     <div className="col-6 col-sm-6 col-md-4 col-lg-3">
       <div className="card mt-4 card-character">
         <img
-          src={`${character.thumbnail.path}.${character.thumbnail.extension}`}
+          src={
+            character.thumbnail
+              ? `${character.thumbnail.path}.${character.thumbnail.extension}`
+              : `${character.img}`
+          }
           className="card-img-top"
           alt={character.name}
         />

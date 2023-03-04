@@ -64,6 +64,7 @@ class User(db.Model):
 class Favorite(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(120), nullable=False)
+    img = db.Column(db.String(120), nullable=False)
     character_id = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     
@@ -71,6 +72,7 @@ class Favorite(db.Model):
     def __init__(self, **kwargs):
         self.name = kwargs['name'],
         self.user_id = kwargs['user_id']
+        self.img = kwargs['img']
         self.character_id = kwargs['character_id'] 
         
     @classmethod
@@ -96,6 +98,7 @@ class Favorite(db.Model):
         return {
             "id": self.id,
             "name": self.name,
+            "img": self.img,
             "user_id": self.user_id,
             "character_id": self.character_id,
         }

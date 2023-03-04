@@ -129,27 +129,33 @@ def handle_login():
                  else:
                      return jsonify({"message":"bad credentials"}), 400
                  
-@api.route('favorite', methods=['GET'])
+@api.route('/favorite', methods=['GET'])
 @jwt_required()
 def get_favorites():
     if request.method == 'GET':
         user_id = get_jwt_identity()
         favorites = Favorite.query.filter_by(user_id = user_id)
+        return jsonify(
+            [fav.serialize() for fav in favorites]
+        ),200
         return jsonify(list(map(lambda favorite: favorite.serialize(), favorites))),200  
     
-@api.route('favorite/<int:character_id>', methods=['POST'])
+@api.route('/favorite/<int:character_id>', methods=['POST'])
 @jwt_required()
 def add_favorites(character_id=None):
     if request.method == 'POST':
         user_id = get_jwt_identity()
+        
 
         if character_id is None:
+            print(character_id)
             return jsonify({"message": "Bad request"}),400
         
         name = request.json.get('name', None)
-
-        if name is None:
-            return jsonify({"msg": "missing name"}), 400
+        img = request.json.get('img', None)
+        
+        if name is None or img is None:
+            return jsonify({"msg": "missing name or url img"}), 400
         else:    
             favorite = Favorite.query.filter_by(user_id = user_id, character_id = character_id).one_or_none()
 
@@ -157,12 +163,12 @@ def add_favorites(character_id=None):
                 return jsonify({"msg": "The character is already in favorites"}), 401
             else:
                 try:
-                    new_favorite = Favorite.create(user_id = user_id, character_id = character_id, name = name)
+                    new_favorite = Favorite.create(user_id = user_id, img = img, character_id = character_id, name = name)
                     return jsonify(new_favorite.serialize()),201
                 except Exception as error:
                     return jsonify({"message": f"Error: {error.args[0]}"}),error.args[1]
 
-@api.route('favorite/<int:character_id>', methods=['DELETE'])
+@api.route('/favorite/<int:character_id>', methods=['DELETE'])
 @jwt_required()
 def delete_favorites(character_id=None):  
     if request.method == "DELETE":

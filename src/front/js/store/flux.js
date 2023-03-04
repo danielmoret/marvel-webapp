@@ -7,6 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       apiUrl: "http://gateway.marvel.com/v1/public",
       endPoints: ["characters"],
       options: ["comics"],
+      favorites: [],
       message: { text: "", type: false },
     },
 
@@ -144,6 +145,33 @@ const getState = ({ getStore, getActions, setStore }) => {
             console.error(error);
             return false;
           }
+        }
+      },
+
+      getFavorites: async () => {
+        const store = getStore();
+        const opts = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${store.token}`,
+          },
+        };
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/favorite`,
+            opts
+          );
+          if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message);
+          }
+          const data = await response.json();
+          setStore({ favorites: data });
+          console.log(data);
+          localStorage.setItem("favorites", JSON.stringify(store.favorites));
+        } catch (error) {
+          console.error(error);
+          return false;
         }
       },
     },

@@ -1,19 +1,19 @@
-import React, { useEffect, useState, useContext } from "react";
-
+import React, { useContext, useEffect } from "react";
 import { Context } from "../store/appContext";
-
-import "../../styles/characters.css";
 import { CardCharacter } from "../component/cardCharacter";
+import "../../styles/characters.css";
 
-export const Characters = () => {
+export const Favorite = () => {
   const { store, actions } = useContext(Context);
-
+  useEffect(() => {
+    actions.getFavorites();
+  }, []);
   return (
     <>
       <div className="container py-3">
         <div className="row">
-          {store.characters.map((character) => (
-            <CardCharacter character={character} key={character.id} />
+          {store.favorites.map((favorite) => (
+            <CardCharacter character={favorite} key={favorite.id} />
           ))}
         </div>
       </div>

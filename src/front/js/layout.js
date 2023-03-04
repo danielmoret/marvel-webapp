@@ -14,6 +14,7 @@ import { CharacterDetail } from "./pages/characterDetail";
 import { Login } from "./pages/login";
 import { Signup } from "./pages/signup";
 import { Profile } from "./pages/profile";
+import { Favorite } from "./pages/favorite";
 
 //create your first component
 const Layout = () => {
@@ -33,6 +34,7 @@ const Layout = () => {
             <Route element={<Characters />} path="/characters" />
             <Route element={<CharacterDetail />} path="/character/:id" />
             <Route element={<Profile />} path="/profile" />
+            <Route element={<Favorite />} path="/favorites" />
             <Route element={<Demo />} path="/demo" />
             <Route element={<Single />} path="/single/:theid" />
             <Route element={<h1>Not found!</h1>} />
