@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { Context } from "../store/appContext";
 
@@ -8,6 +9,7 @@ import { Search } from "../component/search";
 
 export const Characters = () => {
   const { store, actions } = useContext(Context);
+  const navigate = useNavigate();
   const [searchCharacters, setSearchCharacters] = useState([]);
 
   useEffect(() => {
@@ -24,9 +26,13 @@ export const Characters = () => {
     setSearchCharacters(search);
   }, [store.searchValue]);
 
+  useEffect(() => {
+    if (!store.token) navigate("/login");
+  }, [store.token]);
+
   return (
     <>
-      <div className="container py-3">
+      <div className="container py-3 min-vh-100">
         <Search />
         <div className="row">
           {searchCharacters.map((character) => (

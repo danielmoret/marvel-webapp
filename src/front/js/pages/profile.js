@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 
@@ -11,6 +11,10 @@ export const Profile = () => {
   const [new_password, setNewPassword] = useState("");
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
+
+  useEffect(() => {
+    if (!store.token) navigate("/login");
+  }, [store.token]);
 
   const sendData = async (event) => {
     event.preventDefault();

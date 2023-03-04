@@ -7,21 +7,12 @@ const getState = ({ getStore, getActions, setStore }) => {
       apiUrl: "http://gateway.marvel.com/v1/public",
       endPoints: ["characters"],
       options: ["comics"],
-      favorites: [],
+      favorites: JSON.parse(localStorage.getItem("favorites")) || [],
       message: { text: "", type: false },
       searchValue: "",
     },
 
     actions: {
-      // syncToken: () => {
-      //   const token = localStorage.getItem("token");
-      //   const name = localStorage.getItem("name");
-
-      //   if (token && token != "" && token != undefined)
-      //     setStore({ token: token });
-      //   if (name && token != "") setStore({ name: name });
-      // },
-
       toggleMessage: (text, type) => {
         setStore({ message: { text: text, type: type } });
       },

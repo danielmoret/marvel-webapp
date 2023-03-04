@@ -22,50 +22,54 @@ export const Navbar = () => {
         <Link to="/">
           <img src={marvelLogo} className="logo-navbar"></img>
         </Link>
-        <button
-          className="navbar-toggler"
-          type="button"
-          data-bs-toggle="collapse"
-          data-bs-target="#navbarNavAltMarkup"
-          aria-controls="navbarNavAltMarkup"
-          aria-expanded="false"
-          aria-label="Toggle navigation"
-        >
-          <span className="navbar-toggler-icon"></span>
-        </button>
-        <div className="collapse navbar-collapse " id="navbarNavAltMarkup">
-          <div className="w-100 d-flex justify-content-end">
-            <div className="navbar-nav gap-3">
-              <Link
-                className="nav-link text-white fw-bold"
-                aria-current="page"
-                to="/characters"
-              >
-                <i className="fa-solid fa-house"></i>
-              </Link>
-              <Link
-                className="nav-link text-white fw-bold"
-                aria-current="page"
-                to="/favorites"
-              >
-                Favoritos
-              </Link>
-              <Link
-                className="nav-link text-white fw-bold"
-                aria-current="page"
-                to="/profile"
-              >
-                Perfil
-              </Link>
-              <button
-                className="nav-link text-white fw-bold btn btn-danger p-2"
-                onClick={() => actions.logout()}
-              >
-                Cerrar Sesión
-              </button>
+        {store.token && (
+          <>
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNavAltMarkup"
+              aria-controls="navbarNavAltMarkup"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse " id="navbarNavAltMarkup">
+              <div className="w-100 d-flex justify-content-end">
+                <div className="navbar-nav gap-3">
+                  <Link
+                    className="nav-link text-white fw-bold"
+                    aria-current="page"
+                    to="/characters"
+                  >
+                    <i className="fa-solid fa-house"></i>
+                  </Link>
+                  <Link
+                    className="nav-link text-white fw-bold"
+                    aria-current="page"
+                    to="/favorites"
+                  >
+                    Favoritos
+                  </Link>
+                  <Link
+                    className="nav-link text-white fw-bold"
+                    aria-current="page"
+                    to="/profile"
+                  >
+                    Perfil
+                  </Link>
+                  <button
+                    className="nav-link text-white fw-bold btn btn-danger p-2"
+                    onClick={() => actions.logout()}
+                  >
+                    Cerrar Sesión
+                  </button>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </>
+        )}
       </div>
     </nav>
   );

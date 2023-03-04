@@ -25,7 +25,7 @@ export const Home = () => {
             <h1 className="title">Universo Marvel</h1>
           </div>
           <div className="d-flex justify-content-center gap-2">
-            <Link to="/login">
+            <Link to={!store.token ? "/login" : "/characters"}>
               <button className="btn btn-home btn-dark btn-lg">
                 Unete a la experiencia
               </button>
