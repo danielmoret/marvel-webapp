@@ -167,10 +167,90 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
           const data = await response.json();
           setStore({ favorites: data });
-          console.log(data);
           localStorage.setItem("favorites", JSON.stringify(store.favorites));
         } catch (error) {
           console.error(error);
+          return false;
+        }
+      },
+
+      updateFavorite: (item) => {
+        //console.log(item);
+        const store = getStore();
+        const actions = getActions();
+        const favorite =
+          store.favorites.some((fav) => fav.character_id === item.id) ||
+          store.favorites.some((fav) => fav.character_id === item.character_id);
+
+        if (favorite) {
+          actions.deleteFavorite(item);
+        } else {
+          actions.addFavorite(item);
+        }
+      },
+
+      addFavorite: async (item) => {
+        const store = getStore();
+        const actions = getActions();
+        const data = {
+          name: item.name,
+          img: `${item?.thumbnail?.path}.${item?.thumbnail?.extension}`,
+        };
+
+        const opts = {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${store.token}`,
+          },
+          body: JSON.stringify(data),
+        };
+
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/favorite/${item.id}`,
+            opts
+          );
+          if (!response.ok) {
+            const error = response.json();
+            throw new Error(error.message);
+          }
+          actions.toggleMessage("Añadido a favoritos", true);
+          actions.getFavorites();
+          return true;
+        } catch (error) {
+          console.error(error);
+          actions.toggleMessage("No se pudo añadir a favoritos", false);
+          return false;
+        }
+      },
+
+      deleteFavorite: async (item) => {
+        const itemID = item.character_id || item.id;
+        const store = getStore();
+        const actions = getActions();
+        const opts = {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${store.token}`,
+          },
+        };
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/favorite/${itemID}`,
+            opts
+          );
+          if (!response.ok) {
+            const error = response.json();
+            throw new Error(error.message);
+          }
+          actions.toggleMessage("Eliminado de favoritos", true);
+          actions.getFavorites();
+          return true;
+        } catch (error) {
+          console.error(error);
+          actions.toggleMessage("No se pudo eliminar de favoritos", false);
           return false;
         }
       },

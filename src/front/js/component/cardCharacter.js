@@ -1,7 +1,10 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from "../store/appContext";
 import { Link } from "react-router-dom";
 
 export const CardCharacter = ({ character }) => {
+  const { store, actions } = useContext(Context);
+
   return (
     <div className="col-6 col-sm-6 col-md-4 col-lg-3">
       <div className="card mt-4 card-character">
@@ -21,12 +24,24 @@ export const CardCharacter = ({ character }) => {
           <div className="btn-card d-flex justify-content-around align-items-center">
             <Link
               className="btn btn-outline-dark"
-              to={`/character/${character.id}`}
+              to={`/character/${character.character_id || character.id}`}
             >
               Detalle
             </Link>
-            <button className="btn btn-outline-warning">
-              <i className="fa-regular fa-star btn-start"></i>
+            <button
+              className="btn btn-outline-warning"
+              onClick={() => actions.updateFavorite(character)}
+            >
+              {store.favorites.some(
+                (fav) => fav.character_id === character.character_id
+              ) ||
+              store.favorites.some(
+                (fav) => fav.character_id === character.id
+              ) ? (
+                <i className="fa-solid fa-star btn-start"></i>
+              ) : (
+                <i className="fa-regular fa-star btn-start"></i>
+              )}
             </button>
           </div>
         </div>

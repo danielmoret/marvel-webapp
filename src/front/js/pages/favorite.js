@@ -5,9 +5,7 @@ import "../../styles/characters.css";
 
 export const Favorite = () => {
   const { store, actions } = useContext(Context);
-  useEffect(() => {
-    actions.getFavorites();
-  }, []);
+
   return (
     <>
       <div className="container py-3">

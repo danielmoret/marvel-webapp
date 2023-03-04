@@ -5,7 +5,7 @@ import { Accordion } from "../component/accordion";
 import { Context } from "../store/appContext";
 
 export const CharacterDetail = () => {
-  const { store } = useContext(Context);
+  const { store, actions } = useContext(Context);
   const params = useParams();
   const [character, setCharacter] = useState([]);
 
@@ -35,8 +35,17 @@ export const CharacterDetail = () => {
             <div className="card-body">
               <div className="d-flex justify-content-between p-2">
                 <h5 className="card-title h2">{character?.name}</h5>
-                <button className="btn btn-outline-warning">
-                  <i className="fa-regular fa-star btn-start"></i>
+                <button
+                  className="btn btn-outline-warning"
+                  onClick={() => actions.updateFavorite(character)}
+                >
+                  {store.favorites.some(
+                    (fav) => fav.character_id == params.id
+                  ) ? (
+                    <i className="fa-solid fa-star btn-start"></i>
+                  ) : (
+                    <i className="fa-regular fa-star btn-start"></i>
+                  )}
                 </button>
               </div>
 

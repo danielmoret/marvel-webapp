@@ -8,6 +8,11 @@ import { CardCharacter } from "../component/cardCharacter";
 export const Characters = () => {
   const { store, actions } = useContext(Context);
 
+  useEffect(() => {
+    if (store.favorites.lentgth > 0) return;
+    actions.getFavorites();
+  }, []);
+
   return (
     <>
       <div className="container py-3">
