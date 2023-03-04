@@ -12,6 +12,19 @@ export const Profile = () => {
   const [showPassword1, setShowPassword1] = useState(false);
   const [showPassword2, setShowPassword2] = useState(false);
 
+  const handleUser = async () => {
+    if (password !== "") {
+      const deleteAllFavorite = await actions.deleteAllFavorite(password);
+      if (deleteAllFavorite) {
+        actions.deleteUser();
+      } else {
+        actions.toggleMessage("Credenciales invalidas", false);
+      }
+    } else {
+      actions.toggleMessage("No ingreso su contraseña");
+    }
+  };
+
   useEffect(() => {
     if (!store.token) navigate("/login");
   }, [store.token]);
@@ -130,6 +143,9 @@ export const Profile = () => {
             value="Actualizar"
           />
         </form>
+        <button className="btn btn-light mt-3" onClick={handleUser}>
+          <b>Eliminar Cuenta</b> <i className="fa-solid fa-trash"></i>
+        </button>
       </div>
     </div>
   );

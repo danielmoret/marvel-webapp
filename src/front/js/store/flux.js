@@ -91,6 +91,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           );
           const data = await response.json();
           setStore({ name: data.name });
+          localStorage.setItem("name", data.name);
           console.log(data);
         } catch (error) {}
       },
@@ -127,6 +128,34 @@ const getState = ({ getStore, getActions, setStore }) => {
           return true;
         } catch (error) {
           console.error(error);
+          return false;
+        }
+      },
+
+      deleteUser: async () => {
+        const store = getStore();
+        const actions = getActions();
+        const opts = {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${store.token}`,
+          },
+        };
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/user`,
+            opts
+          );
+          if (!response.ok) {
+            const error = response.json();
+            throw new Error(error.message);
+          }
+          actions.toggleMessage("Usuario eliminado", true);
+          actions.logout();
+        } catch (error) {
+          console.error(error);
+          actions.toggleMessage("No se pudo eliminar usuario", false);
           return false;
         }
       },
@@ -235,6 +264,34 @@ const getState = ({ getStore, getActions, setStore }) => {
         } catch (error) {
           console.error(error);
           actions.toggleMessage("No se pudo añadir a favoritos", false);
+          return false;
+        }
+      },
+
+      deleteAllFavorite: async (password) => {
+        const store = getStore();
+        const opts = {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${store.token}`,
+          },
+          body: JSON.stringify({
+            password: password,
+          }),
+        };
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/favorite`,
+            opts
+          );
+          if (!response.ok) {
+            const error = response.json();
+            throw new Error(error.message);
+          }
+          return true;
+        } catch (error) {
+          console.error(error);
           return false;
         }
       },

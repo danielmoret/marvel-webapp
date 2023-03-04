@@ -49,23 +49,23 @@ def gell_all_user():
         return jsonify(user.serialize()),200          
        
 
-@api.route('/user/<int:user_id>', methods=['DELETE'])
-def delete_user(user_id=None):
+@api.route('/user', methods=['DELETE'])
+@jwt_required()
+def delete_user():
     if request.method == "DELETE":
-        if user_id is None:
-            return jsonify({"message": "Bad request"}),400
-        if user_id is not None:
-            user = User.query.get(user_id)
+        user_id = get_jwt_identity()
+        user = User.query.get(user_id)
 
-            if user is None:
-                return jsonify({"message": "user not found"}),404
-            else:
-                try:
-                    user_delete = User.delete_user(user)
-                    return jsonify(user_delete),200
+        if user is None:
+            return jsonify({"message": "user not found"}),404
+        else:
+            try:
+                user_delete = User.delete_user(user)
+                return jsonify(user_delete),200
         
-                except Exception as error:
-                    return jsonify({"message": f"Error: {error.args[0]}"}),error.args[1]
+            except Exception as error:
+                return jsonify({"message": f"Error: {error.args[0]}"}),error.args[1]
+           
 
 @api.route('/user', methods=['PUT'])
 @jwt_required()
@@ -140,7 +140,7 @@ def get_favorites():
         return jsonify(
             [fav.serialize() for fav in favorites]
         ),200
-        return jsonify(list(map(lambda favorite: favorite.serialize(), favorites))),200  
+        
     
 @api.route('/favorite/<int:character_id>', methods=['POST'])
 @jwt_required()
@@ -157,12 +157,12 @@ def add_favorites(character_id=None):
         img = request.json.get('img', None)
         
         if name is None or img is None:
-            return jsonify({"msg": "missing name or url img"}), 400
+            return jsonify({"message": "missing name or url img"}), 400
         else:    
             favorite = Favorite.query.filter_by(user_id = user_id, character_id = character_id).one_or_none()
 
             if favorite is not None:
-                return jsonify({"msg": "The character is already in favorites"}), 401
+                return jsonify({"message": "The character is already in favorites"}), 401
             else:
                 try:
                     new_favorite = Favorite.create(user_id = user_id, img = img, character_id = character_id, name = name)
@@ -172,16 +172,57 @@ def add_favorites(character_id=None):
 
 @api.route('/favorite/<int:character_id>', methods=['DELETE'])
 @jwt_required()
-def delete_favorites(character_id=None):  
+def delete_favorite(character_id=None):  
     if request.method == "DELETE":
        user_id = get_jwt_identity()
        favorite = Favorite.query.filter_by(user_id = user_id, character_id = character_id).one_or_none()
 
        if favorite is None:
-                return jsonify({"msg": "The character not found"}), 401
+                return jsonify({"message": "The character not found"}), 401
        else:
             try:
                 fav_delete = Favorite.delete_fav(favorite)
                 return jsonify(fav_delete),200
             except Exception as error:
                 return jsonify({"message": f"Error: {error.args[0]}"}),error.args[1]
+
+@api.route('/favorite', methods=['DELETE'])
+@jwt_required()
+def delete_all_favorites():
+    if request.method == "DELETE":
+
+        body = request.json
+        password = body.get('password', None)
+
+        user_id = get_jwt_identity()
+        user = User.query.get(user_id)
+
+        if password is None:
+            return jsonify({"message": "missing password"}) 
+
+        if check_password(user.password, password, user.salt):
+            favorite = Favorite.query.filter_by(user_id = user_id)
+            if favorite is None:
+                return jsonify({"message": "The favorites not found"}), 204
+            else:
+                for fav in favorite:
+                    db.session.delete(fav)
+                try:
+                    db.session.commit()
+                    return jsonify([]),200
+                except Exception as error:
+                    return jsonify({"message": f"Error: {error.args[0]}"}),error.args[1]
+        else:
+            return jsonify({"message":"bad credentials"}), 400
+            
+            
+          
+        
+
+        
+
+        
+
+        
+
+        
