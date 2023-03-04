@@ -3,7 +3,7 @@ const getState = ({ getStore, getActions, setStore }) => {
     store: {
       characters: JSON.parse(localStorage.getItem("characters")) || [],
       token: localStorage.getItem("token") || null,
-      name: "",
+      name: localStorage.getItem("name") || "",
       apiUrl: "http://gateway.marvel.com/v1/public",
       endPoints: ["characters"],
       options: ["comics"],
@@ -76,8 +76,29 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      getUserData: async () => {
+        const store = getStore();
+        const opts = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${store.token}`,
+          },
+        };
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/user`,
+            opts
+          );
+          const data = await response.json();
+          setStore({ name: data.name });
+          console.log(data);
+        } catch (error) {}
+      },
+
       updateUser: async (data) => {
         const store = getStore();
+        const actions = getActions();
+
         data.name = data.name.trim() || null;
         data.email = data.email || null;
         data.new_password = data.new_password || null;
@@ -102,6 +123,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           }
           const data = response.json();
           console.log(data);
+          actions.getUserData();
           return true;
         } catch (error) {
           console.error(error);

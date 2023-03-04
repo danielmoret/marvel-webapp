@@ -41,10 +41,12 @@ def add_user():
                 return jsonify({"message": f"Error: {error.args[0]}"}),error.args[1]
 
 @api.route('/user', methods=['GET'])
+@jwt_required()
 def gell_all_user():
     if request.method == 'GET':
-        all_users = User.query.all()
-        return jsonify(list(map(lambda user: user.serialize(), all_users))),200          
+        user_id = get_jwt_identity()
+        user = User.query.get(user_id)
+        return jsonify(user.serialize()),200          
        
 
 @api.route('/user/<int:user_id>', methods=['DELETE'])

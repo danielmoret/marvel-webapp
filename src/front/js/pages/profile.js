@@ -27,6 +27,10 @@ export const Profile = () => {
     });
     if (updateUser) {
       actions.toggleMessage("Perfil actualizado", true);
+      setName("");
+      setEmail("");
+      setNewPassword("");
+      setPassword("");
     } else {
       actions.toggleMessage("No se pudo actualizar el perfil usurio", false);
     }
@@ -94,7 +98,7 @@ export const Profile = () => {
           </div>
           <div className="form-group">
             <label className="form-label" htmlFor="password2">
-              <b>Contraseña anterior:</b>
+              <b>Contraseña actual:</b>
             </label>
             <div className="input-group input-group-md ">
               <input
