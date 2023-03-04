@@ -74,7 +74,7 @@ class Favorite(db.Model):
         self.character_id = kwargs['character_id'] 
         
     @classmethod
-    def create_fav(cls,**kwargs):
+    def create(cls,**kwargs):
         new_favorite = cls(**kwargs)
         db.session.add(new_favorite)
         try:

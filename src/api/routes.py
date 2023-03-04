@@ -3,7 +3,7 @@ This module takes care of starting the API Server, Loading the DB and Adding the
 """
 import os
 from flask import Flask, request, jsonify, url_for, Blueprint
-from api.models import db, User
+from api.models import db, User, Favorite
 from api.utils import generate_sitemap, APIException
 from werkzeug.security import generate_password_hash, check_password_hash
 from base64 import b64encode
@@ -128,3 +128,52 @@ def handle_login():
                      return jsonify({"token": token, "name": login.name}),200
                  else:
                      return jsonify({"message":"bad credentials"}), 400
+                 
+@api.route('favorite', methods=['GET'])
+@jwt_required()
+def get_favorites():
+    if request.method == 'GET':
+        user_id = get_jwt_identity()
+        favorites = Favorite.query.filter_by(user_id = user_id)
+        return jsonify(list(map(lambda favorite: favorite.serialize(), favorites))),200  
+    
+@api.route('favorite/<int:character_id>', methods=['POST'])
+@jwt_required()
+def add_favorites(character_id=None):
+    if request.method == 'POST':
+        user_id = get_jwt_identity()
+
+        if character_id is None:
+            return jsonify({"message": "Bad request"}),400
+        
+        name = request.json.get('name', None)
+
+        if name is None:
+            return jsonify({"msg": "missing name"}), 400
+        else:    
+            favorite = Favorite.query.filter_by(user_id = user_id, character_id = character_id).one_or_none()
+
+            if favorite is not None:
+                return jsonify({"msg": "The character is already in favorites"}), 401
+            else:
+                try:
+                    new_favorite = Favorite.create(user_id = user_id, character_id = character_id, name = name)
+                    return jsonify(new_favorite.serialize()),201
+                except Exception as error:
+                    return jsonify({"message": f"Error: {error.args[0]}"}),error.args[1]
+
+@api.route('favorite/<int:character_id>', methods=['DELETE'])
+@jwt_required()
+def delete_favorites(character_id=None):  
+    if request.method == "DELETE":
+       user_id = get_jwt_identity()
+       favorite = Favorite.query.filter_by(user_id = user_id, character_id = character_id).one_or_none()
+
+       if favorite is None:
+                return jsonify({"msg": "The character not found"}), 401
+       else:
+            try:
+                fav_delete = Favorite.delete_fav(favorite)
+                return jsonify(fav_delete),200
+            except Exception as error:
+                return jsonify({"message": f"Error: {error.args[0]}"}),error.args[1]
