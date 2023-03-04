@@ -2,7 +2,7 @@ const getState = ({ getStore, getActions, setStore }) => {
   return {
     store: {
       characters: JSON.parse(localStorage.getItem("characters")) || [],
-      token: null,
+      token: localStorage.getItem("token") || null,
       name: "",
       apiUrl: "http://gateway.marvel.com/v1/public",
       endPoints: ["characters"],
@@ -12,14 +12,14 @@ const getState = ({ getStore, getActions, setStore }) => {
     },
 
     actions: {
-      syncToken: () => {
-        const token = localStorage.getItem("token");
-        const name = localStorage.getItem("name");
+      // syncToken: () => {
+      //   const token = localStorage.getItem("token");
+      //   const name = localStorage.getItem("name");
 
-        if (token && token != "" && token != undefined)
-          setStore({ token: token });
-        if (name && token != "") setStore({ name: name });
-      },
+      //   if (token && token != "" && token != undefined)
+      //     setStore({ token: token });
+      //   if (name && token != "") setStore({ name: name });
+      // },
 
       toggleMessage: (text, type) => {
         setStore({ message: { text: text, type: type } });
