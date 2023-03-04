@@ -13,6 +13,31 @@ const getState = ({ getStore, getActions, setStore }) => {
     },
 
     actions: {
+      syncToken: async () => {
+        const store = getStore();
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/token/refresh`,
+            {
+              headers: {
+                Authorization: `Bearer ${store.token}`,
+              },
+            }
+          );
+          if (!response.ok) {
+            const error = response.json();
+            throw new Error(error);
+          }
+
+          const data = await response.json();
+          localStorage.setItem("token", data.token);
+          setStore({ token: data.token });
+        } catch (error) {
+          console.error(error);
+          return false;
+        }
+      },
+
       toggleMessage: (text, type) => {
         setStore({ message: { text: text, type: type } });
       },
@@ -78,6 +103,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getUserData: async () => {
         const store = getStore();
+        const actions = getActions();
+
+        const sync = await actions.syncToken();
         const opts = {
           headers: {
             "Content-Type": "application/json",
@@ -92,13 +120,14 @@ const getState = ({ getStore, getActions, setStore }) => {
           const data = await response.json();
           setStore({ name: data.name });
           localStorage.setItem("name", data.name);
-          console.log(data);
         } catch (error) {}
       },
 
       updateUser: async (data) => {
         const store = getStore();
         const actions = getActions();
+
+        const sync = await actions.syncToken();
 
         data.name = data.name.trim() || null;
         data.email = data.email || null;
@@ -123,7 +152,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             throw new Error(error.message);
           }
           const data = response.json();
-          console.log(data);
+
           actions.getUserData();
           return true;
         } catch (error) {
@@ -135,6 +164,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       deleteUser: async () => {
         const store = getStore();
         const actions = getActions();
+
         const opts = {
           method: "DELETE",
           headers: {
@@ -193,6 +223,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       getFavorites: async () => {
         const store = getStore();
+        const actions = getActions();
+
+        const sync = await actions.syncToken();
         const opts = {
           headers: {
             "Content-Type": "application/json",
@@ -218,9 +251,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       },
 
       updateFavorite: (item) => {
-        //console.log(item);
         const store = getStore();
         const actions = getActions();
+
         const favorite =
           store.favorites.some((fav) => fav.character_id === item.id) ||
           store.favorites.some((fav) => fav.character_id === item.character_id);
@@ -235,6 +268,9 @@ const getState = ({ getStore, getActions, setStore }) => {
       addFavorite: async (item) => {
         const store = getStore();
         const actions = getActions();
+
+        const sync = await actions.syncToken();
+
         const data = {
           name: item.name,
           img: `${item?.thumbnail?.path}.${item?.thumbnail?.extension}`,
@@ -270,6 +306,9 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       deleteAllFavorite: async (password) => {
         const store = getStore();
+        const actions = getActions();
+
+        const sync = await actions.syncToken();
         const opts = {
           method: "DELETE",
           headers: {
@@ -300,6 +339,8 @@ const getState = ({ getStore, getActions, setStore }) => {
         const itemID = item.character_id || item.id;
         const store = getStore();
         const actions = getActions();
+
+        const sync = await actions.syncToken();
         const opts = {
           method: "DELETE",
           headers: {

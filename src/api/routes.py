@@ -17,6 +17,15 @@ def set_password(password, salt):
 def check_password(hash_password, password, salt):
     return check_password_hash(hash_password, f"{password}{salt}")
 
+@api.route('/token/refresh', methods=['GET'])
+@jwt_required()
+def refresh_users_token():
+    identity = get_jwt_identity()
+    token= create_access_token(identity=identity)
+
+    return jsonify({"token": token}),200
+
+
 @api.route('/user', methods=['POST'])
 def add_user():
     if request.method == 'POST':
