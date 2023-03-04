@@ -65,39 +65,48 @@ def delete_user(user_id=None):
                 except Exception as error:
                     return jsonify({"message": f"Error: {error.args[0]}"}),error.args[1]
 
-@api.route('/user/<int:user_id>', methods=['PUT'])
-def update_user(user_id=None):
+@api.route('/user', methods=['PUT'])
+@jwt_required()
+def update_user():
     if request.method == "PUT":
-        if user_id is None:
-            return jsonify({"message": "Bad request"}),400
-        if user_id is not None:
-            user = User.query.get(user_id)
+        user = User.query.get(get_jwt_identity())
 
-            if user is None:
-                return jsonify({"message": "user not found"}),404
+        if user is None:
+            return jsonify({"message": "user not found"}),404
+        else:
+            body = request.json
+            print(body)
+
+            name = body.get("name", None)
+            email = body.get("email", None)
+
+            if name is None:
+                    user.name = user.name
             else:
-                body = request.json
+                    user.name = name
+            if email is None:
+                    user.email = user.email
+            else:
+                user.email = email
+
+            password = body.get("password",None)
+            new_password = body.get("new_password", None)
                 
-                user.name = body.get("name", user.name)
-                user.email = body.get("email", user.email)
-                password = body.get("password",None)
-                new_password = body.get("new_password", None)
-                
-                if password is None:
-                    return jsonify({"message": "missing password"}),400
-                if password is not None:
-                    if check_password(user.password,password, user.salt):
-                        if new_password is not None:
-                            user.salt = b64encode(os.urandom(32)).decode('utf-8')
-                            user.password = set_password(new_password, user.salt)
-                        try:
-                            db.session.commit()
-                            return jsonify({"message":"User updated"}),201
+            if password is None:
+                return jsonify({"message": "missing password"}),400
+            if password is not None:
+                if check_password(user.password,password, user.salt):
+                    if new_password is not None:
+                        user.salt = b64encode(os.urandom(32)).decode('utf-8')
+                        user.password = set_password(new_password, user.salt)
+                    try:
+                        db.session.commit()
+                        return jsonify({"message":"User updated"}),201
         
-                        except Exception as error:
-                            return jsonify({"message": f"Error: {error.args[0]}"}),error.args[1]
-                    else:
-                        return jsonify({"message":"bad credentials"}), 400
+                    except Exception as error:
+                        return jsonify({"message": f"Error: {error.args[0]}"}),error.args[1]
+                else:
+                    return jsonify({"message":"bad credentials"}), 400
                 
 @api.route('/login', methods=['POST'])
 def handle_login():

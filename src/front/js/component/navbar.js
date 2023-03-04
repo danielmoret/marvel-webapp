@@ -44,11 +44,18 @@ export const Navbar = () => {
                 Favoritos
               </Link>
               <Link
+                className="nav-link text-white fw-bold"
+                aria-current="page"
+                to="/profile"
+              >
+                Profile
+              </Link>
+              <button
                 className="nav-link text-white fw-bold btn btn-danger p-2"
-                to="/"
+                onClick={() => actions.logout()}
               >
                 Cerrar Sesión
-              </Link>
+              </button>
             </div>
           </div>
         </div>

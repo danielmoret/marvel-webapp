@@ -30,9 +30,6 @@ export const Home = () => {
                 Unete a la experiencia
               </button>
             </Link>
-            {/* <Link to="/signup">
-              <button className="btn btn-home btn-dark btn-lg">Signup</button>
-            </Link> */}
           </div>
         </div>
       </div>

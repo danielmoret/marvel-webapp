@@ -83,6 +83,44 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
+      updateUser: async (data) => {
+        const store = getStore();
+        data.name = data.name.trim() || null;
+        data.email = data.email || null;
+        data.new_password = data.new_password || null;
+        data.password = data.password || null;
+
+        const opts = {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${store.token}`,
+          },
+          body: JSON.stringify(data),
+        };
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/api/user`,
+            opts
+          );
+          if (!response.ok) {
+            const error = response.json();
+            throw new Error(error.message);
+          }
+          const data = response.json();
+          console.log(data);
+          return true;
+        } catch (error) {
+          console.error(error);
+          return false;
+        }
+      },
+
+      logout: () => {
+        localStorage.removeItem("token");
+        setStore({ token: null });
+      },
+
       getCharacters: async () => {
         const store = getStore();
         if (localStorage.characters == undefined) {
