@@ -16,8 +16,16 @@ export const Navbar = () => {
       toast.error(store.message.text);
     }
   }, [store.message]);
+
+  const toggleTheme = () => {
+    if (store.theme == "dark") {
+      actions.handleTheme("");
+    } else {
+      actions.handleTheme("dark");
+    }
+  };
   return (
-    <nav className="navbar navbar-expand-md navbar-dark bg-dark py-3">
+    <nav className="navbar navbar-expand-md sticky-top navbar-dark bg-dark py-3">
       <div className="container ">
         <Toaster />
         <Link to="/">
@@ -60,24 +68,17 @@ export const Navbar = () => {
                   >
                     Perfil
                   </Link>
-                  <button className={mode ? "switch active" : "switch"}>
+                  <button
+                    className={
+                      store.theme == "dark" ? "switch active" : "switch"
+                    }
+                    onClick={toggleTheme}
+                  >
                     <span>
-                      {mode ? (
-                        <i
-                          className="fa-solid fa-sun text-black"
-                          onClick={() => {
-                            actions.handleTheme("");
-                            setMode(false);
-                          }}
-                        ></i>
+                      {store.theme == "dark" ? (
+                        <i className="fa-solid fa-sun text-black"></i>
                       ) : (
-                        <i
-                          className="fa-solid fa-moon text-white"
-                          onClick={() => {
-                            actions.handleTheme("dark");
-                            setMode(true);
-                          }}
-                        ></i>
+                        <i className="fa-solid fa-moon text-white"></i>
                       )}
                     </span>
                   </button>

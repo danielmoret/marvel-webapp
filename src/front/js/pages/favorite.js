@@ -16,9 +16,19 @@ export const Favorite = () => {
     <div className={`w-100 ${store.theme}`}>
       <div className="container py-3 min-vh-100">
         <div className="row">
-          {store.favorites.map((favorite) => (
-            <CardCharacter character={favorite} key={favorite.id} />
-          ))}
+          {store.favorites.length > 0 ? (
+            store.favorites.map((favorite) => (
+              <CardCharacter character={favorite} key={favorite.id} />
+            ))
+          ) : (
+            <div className="col-6 col-sm-6 col-md-4 col-lg-3 w-100">
+              <div className="text-center">
+                <h2 className={store.theme !== "" && "text-white"}>
+                  Sin favoritos
+                </h2>
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>

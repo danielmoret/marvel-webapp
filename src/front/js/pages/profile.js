@@ -41,7 +41,7 @@ export const Profile = () => {
         setNewPassword("");
         setPassword("");
       } else {
-        actions.toggleMessage("No se pudo actualizar el perfil usurio", false);
+        actions.toggleMessage("Contraseña inválida", false);
       }
     } else {
       actions.toggleMessage("No ingreso su contraseña", false);
