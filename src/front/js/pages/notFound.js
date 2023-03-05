@@ -10,7 +10,7 @@ export const NotFound = () => {
           <span className="text-danger">Opps!</span> Página no encontrada.
         </p>
         <Link to="/" className="btn btn-dark">
-          Go Home
+          Ir al inicio
         </Link>
       </div>
     </div>
