@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
+import { Context } from "../store/appContext";
 
 export const Accordion = ({ body, title, id, type }) => {
+  const { store } = useContext(Context);
   return (
     <>
-      <div className="accordion-item">
+      <div className={`accordion-item ${store.theme}`}>
         <h2 className="accordion-header" id={`flush${id}-headingOne`}>
           <button
-            className="accordion-button collapsed"
+            className={`accordion-button collapsed ${store.theme}`}
             type="button"
             data-bs-toggle="collapse"
             data-bs-target={`#flush${id}-collapseOne`}
@@ -24,7 +26,7 @@ export const Accordion = ({ body, title, id, type }) => {
         >
           <div className="accordion-body">
             {body[type]?.items.map((item) => (
-              <p className="fw-semibold" key={item.name}>
+              <p className="fw-light" key={item.name}>
                 {item.name}
               </p>
             ))}

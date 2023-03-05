@@ -66,7 +66,7 @@ export const Navbar = () => {
                         <i
                           className="fa-solid fa-sun text-black"
                           onClick={() => {
-                            handleTheme("light");
+                            actions.handleTheme("");
                             setMode(false);
                           }}
                         ></i>
@@ -74,7 +74,7 @@ export const Navbar = () => {
                         <i
                           className="fa-solid fa-moon text-white"
                           onClick={() => {
-                            handleTheme("dark");
+                            actions.handleTheme("dark");
                             setMode(true);
                           }}
                         ></i>

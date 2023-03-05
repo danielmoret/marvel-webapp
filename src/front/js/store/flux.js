@@ -10,6 +10,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       favorites: JSON.parse(localStorage.getItem("favorites")) || [],
       message: { text: "", type: false },
       searchValue: "",
+      theme: "",
     },
 
     actions: {
@@ -40,6 +41,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       toggleMessage: (text, type) => {
         setStore({ message: { text: text, type: type } });
+      },
+
+      handleTheme: (theme) => {
+        setStore({ theme: theme });
       },
 
       signup: async (data) => {

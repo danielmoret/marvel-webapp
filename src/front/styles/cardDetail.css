@@ -1,0 +1,19 @@
+.dark .card-detail {
+  background-color: #212529;
+  color: white;
+  border: 0;
+}
+
+.accordion-item.dark {
+  background-color: #212529;
+  color: white;
+}
+
+.accordion-button.dark {
+  background-color: #212529;
+  color: white;
+}
+
+.img-detail {
+  width: 100%;
+}

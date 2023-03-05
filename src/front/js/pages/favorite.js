@@ -13,7 +13,7 @@ export const Favorite = () => {
   }, [store.token]);
 
   return (
-    <>
+    <div className={`w-100 ${store.theme}`}>
       <div className="container py-3 min-vh-100">
         <div className="row">
           {store.favorites.map((favorite) => (
@@ -21,6 +21,6 @@ export const Favorite = () => {
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };

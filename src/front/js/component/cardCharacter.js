@@ -23,7 +23,11 @@ export const CardCharacter = ({ character }) => {
           </h5>
           <div className="btn-card d-flex justify-content-around align-items-center">
             <Link
-              className="btn btn-outline-dark"
+              className={
+                store.theme !== "dark"
+                  ? "btn btn-outline-dark"
+                  : "btn btn-outline-light"
+              }
               to={`/character/${character.character_id || character.id}`}
             >
               Detalle

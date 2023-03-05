@@ -32,12 +32,14 @@ export const Characters = () => {
 
   return (
     <>
-      <div className="container py-3 min-vh-100">
-        <Search />
-        <div className="row">
-          {searchCharacters.map((character) => (
-            <CardCharacter character={character} key={character.id} />
-          ))}
+      <div className={`w-100 ${store.theme}`}>
+        <div className={`container py-3 min-vh-100`}>
+          <Search />
+          <div className="row">
+            {searchCharacters.map((character) => (
+              <CardCharacter character={character} key={character.id} />
+            ))}
+          </div>
         </div>
       </div>
     </>
