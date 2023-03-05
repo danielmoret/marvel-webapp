@@ -15,6 +15,7 @@ import { Login } from "./pages/login";
 import { Signup } from "./pages/signup";
 import { Profile } from "./pages/profile";
 import { Favorite } from "./pages/favorite";
+import { NotFound } from "./pages/notFound";
 
 //create your first component
 const Layout = () => {
@@ -37,7 +38,7 @@ const Layout = () => {
             <Route element={<Favorite />} path="/favorites" />
             <Route element={<Demo />} path="/demo" />
             <Route element={<Single />} path="/single/:theid" />
-            <Route element={<h1>Not found!</h1>} />
+            <Route element={<NotFound />} path="*" />
           </Routes>
           <Footer />
         </ScrollToTop>
