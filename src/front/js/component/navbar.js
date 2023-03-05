@@ -38,7 +38,7 @@ export const Navbar = () => {
             </button>
             <div className="collapse navbar-collapse " id="navbarNavAltMarkup">
               <div className="w-100 d-flex justify-content-end">
-                <div className="navbar-nav gap-3">
+                <div className="navbar-nav gap-3 align-items-baseline">
                   <Link
                     className="nav-link text-white fw-bold"
                     aria-current="page"
