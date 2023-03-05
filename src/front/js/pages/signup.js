@@ -34,7 +34,7 @@ export const Signup = () => {
         <form onSubmit={sendData}>
           <div className="form-group">
             <label className="form-label" htmlFor="name">
-              <b>Name:</b>
+              <b>Nombre:</b>
             </label>
             <input
               className="form-control"
@@ -47,7 +47,7 @@ export const Signup = () => {
           </div>
           <div className="form-group">
             <label className="form-label" htmlFor="email">
-              <b>Email:</b>
+              <b>Correo:</b>
             </label>
             <input
               className="form-control"

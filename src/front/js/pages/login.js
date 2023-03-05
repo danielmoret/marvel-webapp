@@ -33,7 +33,7 @@ export const Login = () => {
         <form onSubmit={sendData}>
           <div className="form-group">
             <label className="form-label" htmlFor="email">
-              <b>Email:</b>
+              <b>Correo:</b>
             </label>
             <input
               className="form-control"
