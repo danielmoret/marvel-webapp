@@ -1,0 +1,49 @@
+.container-login {
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.login {
+  width: 22.5rem;
+  height: min-content;
+  padding: 1.25rem;
+  border-radius: 12px;
+  background-color: #212529;
+}
+
+.login h1 {
+  font-size: 2.25rem;
+  margin-bottom: 1.5625rem;
+}
+
+.login form {
+  font-size: 1.25rem;
+}
+
+.login form .form-group {
+  margin-bottom: 0.75rem;
+}
+
+.login form input[type="email"],
+.login form input[type="password"] {
+  background-color: white;
+}
+
+.login form input[type="submit"] {
+  font-size: 1.25rem;
+  margin-top: 0.9375rem;
+  font-weight: 600;
+}
+
+a:link {
+  text-decoration: none;
+}
+a:visited {
+  text-decoration: none;
+}
+
+.register-link {
+  padding-top: 0.8rem;
+}

@@ -1,26 +1,38 @@
 import React, { useContext } from "react";
+import { Link } from "react-router-dom";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
+import marvelBanner from "../../img/banner.jpg";
+
 import "../../styles/home.css";
 
 export const Home = () => {
-	const { store, actions } = useContext(Context);
+  const { store, actions } = useContext(Context);
 
-	return (
-		<div className="text-center mt-5">
-			<h1>Hello Rigo!!</h1>
-			<p>
-				<img src={rigoImageUrl} />
-			</p>
-			<div className="alert alert-info">
-				{store.message || "Loading message from the backend (make sure your python backend is running)..."}
-			</div>
-			<p>
-				This boilerplate comes with lots of documentation:{" "}
-				<a href="https://start.4geeksacademy.com/starters/react-flask">
-					Read documentation
-				</a>
-			</p>
-		</div>
-	);
+  return (
+    <div>
+      <div
+        className="card card-home text-bg-dark border-0"
+        style={{
+          backgroundImage: `url(
+          "https://i.pinimg.com/originals/4f/4d/da/4f4ddacf4ac20f9c6af4444779ed40e0.jpg"
+        )`,
+        }}
+      ></div>
+      <div className="card-img-overlay d-flex justify-content-center align-items-center mt-5">
+        <div className="d-flex flex-column gap-5 align-items-center">
+          <div>
+            <h1 className="title">Universo Marvel</h1>
+          </div>
+          <div className="d-flex justify-content-center gap-2">
+            <Link to={!store.token ? "/login" : "/characters"}>
+              <button className="btn btn-home btn-dark btn-lg">
+                Unete a la experiencia
+              </button>
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 };

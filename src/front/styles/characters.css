@@ -1,0 +1,15 @@
+.card-img-top {
+  height: 222px;
+}
+
+.btn-start {
+  font-size: 1.3rem;
+}
+
+/*Dark mode*/
+
+.dark .card-character {
+  background-color: #212529;
+  color: white;
+  border: 0;
+}

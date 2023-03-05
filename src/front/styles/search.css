@@ -1,0 +1,29 @@
+.input-search {
+  border: none;
+  border-bottom: 2px solid black;
+}
+
+.input-search:focus {
+  outline: none;
+}
+
+.input-search:active {
+  outline: none;
+}
+
+/* Dark mode */
+
+.dark .input-search {
+  border: none;
+  border-bottom: 2px solid #212529;
+  background-color: black;
+}
+
+.dark .input-search:focus {
+  outline: none;
+  color: white;
+}
+
+.dark .input-search:active {
+  outline: none;
+}
