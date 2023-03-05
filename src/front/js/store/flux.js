@@ -10,12 +10,13 @@ const getState = ({ getStore, getActions, setStore }) => {
       favorites: JSON.parse(localStorage.getItem("favorites")) || [],
       message: { text: "", type: false },
       searchValue: "",
-      theme: "",
+      theme: localStorage.getItem("theme") || "",
     },
 
     actions: {
       syncToken: async () => {
         const store = getStore();
+        const actions = getActions();
         try {
           const response = await fetch(
             `${process.env.BACKEND_URL}/api/token/refresh`,
@@ -35,6 +36,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           setStore({ token: data.token });
         } catch (error) {
           console.error(error);
+          actions.logout();
           return false;
         }
       },
@@ -45,6 +47,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
       handleTheme: (theme) => {
         setStore({ theme: theme });
+        localStorage.setItem("theme", theme);
       },
 
       signup: async (data) => {

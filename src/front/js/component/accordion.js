@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Context } from "../store/appContext";
+import "../../styles/cardDetail.css";
 
 export const Accordion = ({ body, title, id, type }) => {
   const { store } = useContext(Context);

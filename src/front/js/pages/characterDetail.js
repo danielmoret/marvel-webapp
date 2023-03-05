@@ -24,7 +24,7 @@ export const CharacterDetail = () => {
   return (
     <div className={`w-100 ${store.theme} `}>
       <div
-        className="container-fluid py-3 d-flex justify-content-center align-items-center"
+        className="container py-3 d-flex justify-content-center align-items-center"
         style={{ minHeight: "100vh" }}
       >
         <div className="card card-detail mb-3" style={{ width: "100%" }}>
