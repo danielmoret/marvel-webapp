@@ -14,12 +14,16 @@ export const Signup = () => {
 
   const sendData = async (event) => {
     event.preventDefault();
-    const signup = await actions.signup({ name, email, password });
-    if (signup) {
-      actions.toggleMessage("Usuario creado correctamente", true);
-      navigate("/login");
+    if (name.trim() !== "" && email !== "" && password !== "") {
+      const signup = await actions.signup({ name, email, password });
+      if (signup) {
+        actions.toggleMessage("Usuario creado correctamente", true);
+        navigate("/login");
+      } else {
+        actions.toggleMessage("No se pudo crear usurio", false);
+      }
     } else {
-      actions.toggleMessage("No se pudo crear usurio", false);
+      actions.toggleMessage("Complete todos los campos", false);
     }
   };
 
@@ -50,7 +54,7 @@ export const Signup = () => {
               type="email"
               id="email"
               value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={(event) => setEmail(event.target.value.trim())}
               required
             />
           </div>
@@ -66,7 +70,7 @@ export const Signup = () => {
                 aria-label="Sizing example input"
                 aria-describedby="inputGroup-sizing-sm"
                 value={password}
-                onChange={(event) => setPassword(event.target.value)}
+                onChange={(event) => setPassword(event.target.value.trim())}
                 required
               />
               <span

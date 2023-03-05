@@ -25,29 +25,32 @@ export const Profile = () => {
     }
   };
 
+  const sendData = async (event) => {
+    event.preventDefault();
+    if (password !== "") {
+      const updateUser = await actions.updateUser({
+        name,
+        email,
+        new_password,
+        password,
+      });
+      if (updateUser) {
+        actions.toggleMessage("Perfil actualizado", true);
+        setName("");
+        setEmail("");
+        setNewPassword("");
+        setPassword("");
+      } else {
+        actions.toggleMessage("No se pudo actualizar el perfil usurio", false);
+      }
+    } else {
+      actions.toggleMessage("No ingreso su contraseña", false);
+    }
+  };
+
   useEffect(() => {
     if (!store.token) navigate("/login");
   }, [store.token]);
-
-  const sendData = async (event) => {
-    event.preventDefault();
-
-    const updateUser = await actions.updateUser({
-      name,
-      email,
-      new_password,
-      password,
-    });
-    if (updateUser) {
-      actions.toggleMessage("Perfil actualizado", true);
-      setName("");
-      setEmail("");
-      setNewPassword("");
-      setPassword("");
-    } else {
-      actions.toggleMessage("No se pudo actualizar el perfil usurio", false);
-    }
-  };
 
   return (
     <div className={`w-100 py-3 ${store.theme}`}>

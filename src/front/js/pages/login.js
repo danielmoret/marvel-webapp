@@ -13,12 +13,16 @@ export const Login = () => {
 
   const sendData = async (event) => {
     event.preventDefault();
-    const login = await actions.login(email, password);
-    if (login) {
-      actions.toggleMessage("Logueado correctamente", true);
-      navigate("/characters");
+    if (email !== "" && password !== "") {
+      const login = await actions.login(email, password);
+      if (login) {
+        actions.toggleMessage("Logueado correctamente", true);
+        navigate("/characters");
+      } else {
+        actions.toggleMessage("Credenciales inválidas", false);
+      }
     } else {
-      actions.toggleMessage("Credenciales inválidas", false);
+      actions.toggleMessage("Complete todos los campos", false);
     }
   };
 
@@ -36,7 +40,7 @@ export const Login = () => {
               type="email"
               id="email"
               value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={(event) => setEmail(event.target.value.trim())}
               required
             />
           </div>
@@ -52,7 +56,7 @@ export const Login = () => {
                 aria-label="Sizing example input"
                 aria-describedby="inputGroup-sizing-sm"
                 value={password}
-                onChange={(event) => setPassword(event.target.value)}
+                onChange={(event) => setPassword(event.target.value.trim())}
                 required
               />
               <span
