@@ -1,4 +1,4 @@
-import React, { useEffect, useContext } from "react";
+import React, { useEffect, useContext, useState } from "react";
 import { Context } from "../store/appContext";
 import marvelLogo from "../../img/Marvel_Logo.svg.png";
 import { Link } from "react-router-dom";
@@ -7,6 +7,7 @@ import "../../styles/navbar.css";
 
 export const Navbar = () => {
   const { store, actions } = useContext(Context);
+  const [mode, setMode] = useState(false);
   useEffect(() => {
     if (store.message.text === "") return;
     if (store.message.type) {
@@ -59,6 +60,27 @@ export const Navbar = () => {
                   >
                     Perfil
                   </Link>
+                  <button className={mode ? "switch active" : "switch"}>
+                    <span>
+                      {mode ? (
+                        <i
+                          className="fa-solid fa-sun text-black"
+                          onClick={() => {
+                            handleTheme("light");
+                            setMode(false);
+                          }}
+                        ></i>
+                      ) : (
+                        <i
+                          className="fa-solid fa-moon text-white"
+                          onClick={() => {
+                            handleTheme("dark");
+                            setMode(true);
+                          }}
+                        ></i>
+                      )}
+                    </span>
+                  </button>
                   <button
                     className="nav-link text-white fw-bold btn btn-danger p-2"
                     onClick={() => actions.logout()}

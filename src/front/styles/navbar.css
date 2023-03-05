@@ -1,3 +1,26 @@
 .logo-navbar {
   width: 7.1875rem;
 }
+
+.switch {
+  background-color: #343d5b;
+  border-radius: 1000px;
+  border: none;
+  position: relative;
+  cursor: pointer;
+  display: flex;
+  outline: none;
+}
+
+.switch.active {
+  background-color: white;
+  color: black;
+}
+
+.switch > span {
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
+  background: none;
+  color: #fff;
+}
