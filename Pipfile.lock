@@ -22,7 +22,7 @@
                 "sha256:f9cc3fbf0a3c60f8de959bb5c195586618d7ce37e7033e3dfc59396b7889a5e1"
             ],
             "markers": "python_version >= '3.7'",
-            "version": "==1.10.0"
+            "version": "==1.8.1"
         },
         "certifi": {
             "hashes": [
