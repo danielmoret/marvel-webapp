@@ -4,7 +4,7 @@ const getState = ({ getStore, getActions, setStore }) => {
       characters: JSON.parse(localStorage.getItem("characters")) || [],
       token: localStorage.getItem("token") || null,
       name: localStorage.getItem("name") || "",
-      apiUrl: "http://gateway.marvel.com/v1/public",
+      apiUrl: "https://gateway.marvel.com/v1/public",
       endPoints: ["characters"],
       options: ["comics"],
       favorites: JSON.parse(localStorage.getItem("favorites")) || [],
