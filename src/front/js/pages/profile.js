@@ -56,7 +56,7 @@ export const Profile = () => {
     <div className={`w-100 py-3 ${store.theme}`}>
       <div className="container-login d-flex flex-column">
         <div className="py-2">
-          <h2 className={store.theme == "dark" && "text-white"}>
+          <h2 className={store.theme == "dark" ? "text-white" : ""}>
             Hola {store.name}
           </h2>
         </div>
