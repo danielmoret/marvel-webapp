@@ -19,7 +19,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         const actions = getActions();
         try {
           const response = await fetch(
-            `${process.env.BACKEND_URL}/api/token/refresh`,
+            `${process.env.BACKEND_URL}/token/refresh`,
             {
               headers: {
                 Authorization: `Bearer ${store.token}`,
@@ -60,10 +60,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
 
         try {
-          const response = await fetch(
-            `${process.env.BACKEND_URL}/api/user`,
-            opts
-          );
+          const response = await fetch(`${process.env.BACKEND_URL}/user`, opts);
           if (!response.ok) {
             const error = response.json();
             throw new Error(error.message);
@@ -89,7 +86,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
         try {
           const response = await fetch(
-            `${process.env.BACKEND_URL}/api/login`,
+            `${process.env.BACKEND_URL}/login`,
             opts
           );
 
@@ -121,10 +118,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           },
         };
         try {
-          const response = await fetch(
-            `${process.env.BACKEND_URL}/api/user`,
-            opts
-          );
+          const response = await fetch(`${process.env.BACKEND_URL}/user`, opts);
           const data = await response.json();
           setStore({ name: data.name });
           localStorage.setItem("name", data.name);
@@ -151,10 +145,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           body: JSON.stringify(data),
         };
         try {
-          const response = await fetch(
-            `${process.env.BACKEND_URL}/api/user`,
-            opts
-          );
+          const response = await fetch(`${process.env.BACKEND_URL}/user`, opts);
           if (!response.ok) {
             const error = response.json();
             throw new Error(error.message);
@@ -181,10 +172,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           },
         };
         try {
-          const response = await fetch(
-            `${process.env.BACKEND_URL}/api/user`,
-            opts
-          );
+          const response = await fetch(`${process.env.BACKEND_URL}/user`, opts);
           if (!response.ok) {
             const error = response.json();
             throw new Error(error.message);
@@ -242,7 +230,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
         try {
           const response = await fetch(
-            `${process.env.BACKEND_URL}/api/favorite`,
+            `${process.env.BACKEND_URL}/favorite`,
             opts
           );
           if (!response.ok) {
@@ -295,7 +283,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 
         try {
           const response = await fetch(
-            `${process.env.BACKEND_URL}/api/favorite/${item.id}`,
+            `${process.env.BACKEND_URL}/favorite/${item.id}`,
             opts
           );
           if (!response.ok) {
@@ -329,7 +317,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
         try {
           const response = await fetch(
-            `${process.env.BACKEND_URL}/api/favorite`,
+            `${process.env.BACKEND_URL}/favorite`,
             opts
           );
           if (!response.ok) {
@@ -358,7 +346,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
         try {
           const response = await fetch(
-            `${process.env.BACKEND_URL}/api/favorite/${itemID}`,
+            `${process.env.BACKEND_URL}/favorite/${itemID}`,
             opts
           );
           if (!response.ok) {
