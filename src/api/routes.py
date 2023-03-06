@@ -70,7 +70,7 @@ def delete_user():
         else:
             try:
                 user_delete = User.delete_user(user)
-                return jsonify(user_delete),200
+                return jsonify({"message": "user deleted"}),200
         
             except Exception as error:
                 return jsonify({"message": f"Error: {error.args[0]}"}),error.args[1]
