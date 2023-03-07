@@ -8,7 +8,7 @@ Regarding the backend, the application has CRUD functionalities for users and th
 
 ## Documentation
 
-[Api Documentation](https://app.swaggerhub.com/apis-docs/DMWORK24_1/api-marvel_app/1.0.0#/)
+[API Documentation](https://app.swaggerhub.com/apis-docs/DMWORK24_1/api-marvel_app/1.0.0#/)
 
 ### Context
 
