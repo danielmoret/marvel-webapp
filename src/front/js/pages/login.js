@@ -28,6 +28,12 @@ export const Login = () => {
     }
   };
 
+  useEffect(() => {
+    if (store.token && store.tokenUserTalonario !== null) {
+      navigate("/characters");
+    }
+  }, [store.token]);
+
   return (
     <div className="container-login">
       <div className="login text-center text-white">
