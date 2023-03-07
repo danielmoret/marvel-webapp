@@ -29,7 +29,7 @@ export const Login = () => {
   };
 
   useEffect(() => {
-    if (store.token && store.tokenUserTalonario !== null) {
+    if (store.token && store.token !== null) {
       navigate("/characters");
     }
   }, [store.token]);
