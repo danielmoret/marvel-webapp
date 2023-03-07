@@ -18,7 +18,7 @@ export const Profile = () => {
       if (deleteAllFavorite) {
         actions.deleteUser();
       } else {
-        actions.toggleMessage("Credenciales invalidas", false);
+        actions.toggleMessage("Credenciales inválidas", false);
       }
     } else {
       actions.toggleMessage("No ingreso su contraseña");

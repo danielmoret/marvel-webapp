@@ -333,7 +333,6 @@ const getState = ({ getStore, getActions, setStore }) => {
             throw new Error(error.message);
           }
           const data = await response.json();
-          console.log(data);
           return true;
         } catch (error) {
           console.error(error);
