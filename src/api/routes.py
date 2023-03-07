@@ -25,6 +25,27 @@ def refresh_users_token():
 
     return jsonify({"token": token}),200
 
+@api.route('/user/check',methods=['POST'])
+@jwt_required()
+def check():
+    if request.method == 'POST':
+        user_id = get_jwt_identity()
+        body = request.json
+
+        password= body.get("password",None)
+
+        if password is None:
+            return jsonify({"message": "missing password"}),400
+        else:
+            user = User.query.get(user_id)
+            if user is None:
+                    return jsonify({"message":"bad credentials"}), 401
+            else:
+                if check_password(user.password, password, user.salt):
+                    return jsonify({"message": "good credentials"}),200
+                else:
+                    return jsonify({"message":"bad credentials"}), 401
+
 
 @api.route('/user', methods=['POST'])
 def add_user():
@@ -36,7 +57,7 @@ def add_user():
         password= body.get("password",None)
        
         if email is None or password is None or name is None:
-            return "you need name an email and a password",400
+            return jsonify({"message": "you need name an email and a password"}),400
         else:
             salt = b64encode(os.urandom(32)).decode('utf-8')
             password = set_password(password, salt)
@@ -70,7 +91,7 @@ def delete_user():
         else:
             try:
                 user_delete = User.delete_user(user)
-                return jsonify({"message": "user deleted"}),200
+                return jsonify({"message": "user deleted"}),204
         
             except Exception as error:
                 return jsonify({"message": f"Error: {error.args[0]}"}),error.args[1]
@@ -112,12 +133,12 @@ def update_user():
                         user.password = set_password(new_password, user.salt)
                     try:
                         db.session.commit()
-                        return jsonify({"message":"User updated"}),201
+                        return jsonify({"message":"User updated"}),200
         
                     except Exception as error:
                         return jsonify({"message": f"Error: {error.args[0]}"}),error.args[1]
                 else:
-                    return jsonify({"message":"bad credentials"}), 400
+                    return jsonify({"message":"bad credentials"}), 401
                 
 @api.route('/login', methods=['POST'])
 def handle_login():
@@ -132,13 +153,13 @@ def handle_login():
          else:
             login = User.query.filter_by(email=email).one_or_none()
             if login is None:
-                return jsonify({"message":"bad credentials"}), 400
+                return jsonify({"message":"bad credentials"}), 401
             else:
                  if check_password(login.password, password, login.salt):
                      token = create_access_token(identity=login.id)
                      return jsonify({"token": token, "name": login.name}),200
                  else:
-                     return jsonify({"message":"bad credentials"}), 400
+                     return jsonify({"message":"bad credentials"}), 401
                  
 @api.route('/favorite', methods=['GET'])
 @jwt_required()
@@ -175,7 +196,7 @@ def add_favorites(character_id=None):
             else:
                 try:
                     new_favorite = Favorite.create(user_id = user_id, img = img, character_id = character_id, name = name)
-                    return jsonify(new_favorite.serialize()),201
+                    return jsonify({"message": "Favorite created"}),201
                 except Exception as error:
                     return jsonify({"message": f"Error: {error.args[0]}"}),error.args[1]
 
@@ -187,11 +208,11 @@ def delete_favorite(character_id=None):
        favorite = Favorite.query.filter_by(user_id = user_id, character_id = character_id).one_or_none()
 
        if favorite is None:
-                return jsonify({"message": "The character not found"}), 401
+                return jsonify({"message": "The character not found"}), 404
        else:
             try:
                 fav_delete = Favorite.delete_fav(favorite)
-                return jsonify(fav_delete),200
+                return jsonify({"message": "favorite deleted"}),204
             except Exception as error:
                 return jsonify({"message": f"Error: {error.args[0]}"}),error.args[1]
 
@@ -207,7 +228,7 @@ def delete_all_favorites():
         user = User.query.get(user_id)
 
         if password is None:
-            return jsonify({"message": "missing password"}) 
+            return jsonify({"message": "missing password"}),400 
 
         if check_password(user.password, password, user.salt):
             favorite = Favorite.query.filter_by(user_id = user_id)
@@ -222,10 +243,9 @@ def delete_all_favorites():
                 except Exception as error:
                     return jsonify({"message": f"Error: {error.args[0]}"}),error.args[1]
         else:
-            return jsonify({"message":"bad credentials"}), 400
+            return jsonify({"message":"bad credentials"}), 401
             
-            
-          
+
         
 
         
