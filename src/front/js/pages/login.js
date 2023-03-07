@@ -17,6 +17,8 @@ export const Login = () => {
       const login = await actions.login(email, password);
       if (login) {
         actions.toggleMessage("Logueado correctamente", true);
+        setEmail("");
+        setPassword("");
         navigate("/characters");
       } else {
         actions.toggleMessage("Credenciales inválidas", false);

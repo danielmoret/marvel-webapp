@@ -18,6 +18,9 @@ export const Signup = () => {
       const signup = await actions.signup({ name, email, password });
       if (signup) {
         actions.toggleMessage("Usuario creado correctamente", true);
+        setName("");
+        setEmail("");
+        setPassword("");
         navigate("/login");
       } else {
         actions.toggleMessage("No se pudo crear usurio", false);
