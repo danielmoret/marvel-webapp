@@ -28,7 +28,11 @@ export const CardCharacter = ({ character }) => {
                   ? "btn btn-outline-dark"
                   : "btn btn-outline-light"
               }
-              to={`/character/${character.character_id || character.id}`}
+              to={
+                character?.character_id
+                  ? `/character/${character?.character_id}`
+                  : `/character/${character.id}`
+              }
             >
               Detalle
             </Link>
