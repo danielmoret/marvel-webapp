@@ -1,33 +1,14 @@
-# WebApp boilerplate with React JS and Flask API
+# Marvel WebApp :boom:
+
+Web application that features a welcome page and offers the possibility to register and log in. It also includes a search engine to find Marvel characters, a favorites view to show the items saved by the user, and a profile view where the user can change their data. Each character is presented in a card, with options to add or remove from favorites and view the details of each character.
+
+Regarding the backend, the application has CRUD functionalities for users and their favorites, storing the data in a database. Allowing the user to access and modify their favorites at any time, as well as the possibility to modify their initial login information or delete their account.
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io#https://github.com/4GeeksAcademy/react-flask-hello.git)
 
-> Documentation: https://start.4geeksacademy.com/
+## Documentation
 
-<p align="center">
-<a href="https://www.loom.com/share/f37c6838b3f1496c95111e515e83dd9b"><img src="https://github.com/4GeeksAcademy/flask-rest-hello/blob/main/docs/assets/how-to.png?raw=true?raw=true" /></a>
-</p>
-
-- React.js front end and python/flask backend for your web application.
-- Extensive documentation [here](https://start.4geeksacademy.com/).
-- Integrated with Pipenv for package managing.
-- Fast deloyment to heroku [in just a few steps here](https://start.4geeksacademy.com/backend/deploy-heroku-posgres).
-- Use of .env file.
-- SQLAlchemy integration for database abstraction.
-
-### Styles
-
-You can update the `styles/index.scss` or create new `.scss` files inside `styles/` and import them into your current scss or js files depending on your needs.
-
-### Components
-
-Add more files into your `./src/js/components` or styles folder as you need them and import them into your current files as needed.
-
-💡Note: There is an example using the Context API inside `views/demo.js`;
-
-### Views (Components)
-
-Add more files into your `./src/js/views` and import them in `./src/js/layout.jsx`.
+[Api Documentation](https://app.swaggerhub.com/apis-docs/DMWORK24_1/api-marvel_app/1.0.0#/)
 
 ### Context
 
@@ -41,9 +22,9 @@ The `Provider` is already set. You can consume from any component using the useC
 ```jsx
 import { Context } from "../store/appContext";
 const MyComponentSuper = () => {
-    //here you use useContext to get store and actions
-    const { store, actions } = useContext(Context);
-    return <div>{/* you can use your actions or store inside the html */}</div>;
+  //here you use useContext to get store and actions
+  const { store, actions } = useContext(Context);
+  return <div>{/* you can use your actions or store inside the html */}</div>;
 };
 ```
 
@@ -89,7 +70,7 @@ To update with all yours tables you can edit the file app.py and go to the line 
 
 ### Front-End Manual Installation:
 
--   Make sure you are using node version 14+ and that you have already successfully installed and runned the backend.
+- Make sure you are using node version 14+ and that you have already successfully installed and runned the backend.
 
 1. Install the packages: `$ npm install`
 2. Start coding! start the webpack dev server `$ npm run start`
