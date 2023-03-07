@@ -140,7 +140,7 @@ def update_user():
                 else:
                     return jsonify({"message":"bad credentials"}), 401
                 
-@api.route('/login', methods=['POST'])
+@api.route('/user/login', methods=['POST'])
 def handle_login():
      if request.method == 'POST':
          body = request.json 

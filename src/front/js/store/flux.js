@@ -86,7 +86,7 @@ const getState = ({ getStore, getActions, setStore }) => {
         };
         try {
           const response = await fetch(
-            `${process.env.BACKEND_URL}/login`,
+            `${process.env.BACKEND_URL}/user/login`,
             opts
           );
 
