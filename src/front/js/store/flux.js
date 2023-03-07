@@ -27,7 +27,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             }
           );
           if (!response.ok) {
-            const error = response.json();
+            const error = await response.json();
             throw new Error(error);
           }
 
@@ -62,10 +62,10 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const response = await fetch(`${process.env.BACKEND_URL}/user`, opts);
           if (!response.ok) {
-            const error = response.json();
+            const error = await response.json();
             throw new Error(error.message);
           }
-          const data = response.json();
+          const data = await response.json();
           return true;
         } catch (error) {
           console.error(error);
@@ -91,7 +91,7 @@ const getState = ({ getStore, getActions, setStore }) => {
           );
 
           if (!response.ok) {
-            const error = response.json();
+            const error = await response.json();
             throw new Error(error.message);
           }
           const data = await response.json();
@@ -147,10 +147,10 @@ const getState = ({ getStore, getActions, setStore }) => {
         try {
           const response = await fetch(`${process.env.BACKEND_URL}/user`, opts);
           if (!response.ok) {
-            const error = response.json();
+            const error = await response.json();
             throw new Error(error.message);
           }
-          const data = response.json();
+          const data = await response.json();
 
           actions.getUserData();
           return true;
@@ -164,25 +164,32 @@ const getState = ({ getStore, getActions, setStore }) => {
         const store = getStore();
         const actions = getActions();
 
-        const opts = {
-          method: "DELETE",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${store.token}`,
-          },
-        };
-        try {
-          const response = await fetch(`${process.env.BACKEND_URL}/user`, opts);
-          if (!response.ok) {
-            const error = response.json();
-            throw new Error(error.message);
+        const resp = await actions.deleteAllFavorite();
+
+        if (resp) {
+          const opts = {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${store.token}`,
+            },
+          };
+          try {
+            const response = await fetch(
+              `${process.env.BACKEND_URL}/user`,
+              opts
+            );
+            if (!response.ok) {
+              const error = await response.json();
+              throw new Error(error.message);
+            }
+            actions.toggleMessage("Usuario eliminado", true);
+            actions.logout();
+          } catch (error) {
+            console.error(error);
+            actions.toggleMessage("No se pudo eliminar usuario", false);
+            return false;
           }
-          actions.toggleMessage("Usuario eliminado", true);
-          actions.logout();
-        } catch (error) {
-          console.error(error);
-          actions.toggleMessage("No se pudo eliminar usuario", false);
-          return false;
         }
       },
 
@@ -199,7 +206,7 @@ const getState = ({ getStore, getActions, setStore }) => {
               `${store.apiUrl}/characters?ts=${process.env.API_TS}&apikey=${process.env.API_KEY}&hash=${process.env.API_HASH}`
             );
             if (!response.ok) {
-              const error = response.json();
+              const error = await response.json();
               throw new Error(error.message);
             }
             const body = await response.json();
@@ -287,7 +294,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             opts
           );
           if (!response.ok) {
-            const error = response.json();
+            const error = await response.json();
             throw new Error(error.message);
           }
           actions.toggleMessage("Añadido a favoritos", true);
@@ -300,13 +307,13 @@ const getState = ({ getStore, getActions, setStore }) => {
         }
       },
 
-      deleteAllFavorite: async (password) => {
+      chekcUser: async (password) => {
         const store = getStore();
         const actions = getActions();
-
         const sync = await actions.syncToken();
+
         const opts = {
-          method: "DELETE",
+          method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${store.token}`,
@@ -315,13 +322,43 @@ const getState = ({ getStore, getActions, setStore }) => {
             password: password,
           }),
         };
+
+        try {
+          const response = await fetch(
+            `${process.env.BACKEND_URL}/user/check`,
+            opts
+          );
+          if (!response.ok) {
+            const error = await response.json();
+            throw new Error(error.message);
+          }
+          const data = await response.json();
+          console.log(data);
+          return true;
+        } catch (error) {
+          console.error(error);
+          return false;
+        }
+      },
+
+      deleteAllFavorite: async () => {
+        const store = getStore();
+        const actions = getActions();
+
+        const opts = {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${store.token}`,
+          },
+        };
         try {
           const response = await fetch(
             `${process.env.BACKEND_URL}/favorite`,
             opts
           );
           if (!response.ok) {
-            const error = response.json();
+            const error = await response.json();
             throw new Error(error.message);
           }
           return true;
@@ -350,7 +387,7 @@ const getState = ({ getStore, getActions, setStore }) => {
             opts
           );
           if (!response.ok) {
-            const error = response.json();
+            const error = await response.json();
             throw new Error(error.message);
           }
           actions.toggleMessage("Eliminado de favoritos", true);

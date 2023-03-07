@@ -221,29 +221,20 @@ def delete_favorite(character_id=None):
 def delete_all_favorites():
     if request.method == "DELETE":
 
-        body = request.json
-        password = body.get('password', None)
-
         user_id = get_jwt_identity()
-        user = User.query.get(user_id)
 
-        if password is None:
-            return jsonify({"message": "missing password"}),400 
-
-        if check_password(user.password, password, user.salt):
-            favorite = Favorite.query.filter_by(user_id = user_id)
-            if favorite is None:
-                return jsonify({"message": "The favorites not found"}), 204
-            else:
-                for fav in favorite:
-                    db.session.delete(fav)
-                try:
-                    db.session.commit()
-                    return jsonify([]),200
-                except Exception as error:
-                    return jsonify({"message": f"Error: {error.args[0]}"}),error.args[1]
+        favorite = Favorite.query.filter_by(user_id = user_id)
+        if favorite is None:
+            return jsonify({"message": "The favorites not found"}), 204
         else:
-            return jsonify({"message":"bad credentials"}), 401
+            for fav in favorite:
+                db.session.delete(fav)
+            try:
+                db.session.commit()
+                return jsonify({"message": "favorites removed"}),200
+            except Exception as error:
+                return jsonify({"message": f"Error: {error.args[0]}"}),error.args[1]
+   
             
 
         

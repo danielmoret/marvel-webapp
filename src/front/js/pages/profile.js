@@ -14,7 +14,7 @@ export const Profile = () => {
 
   const handleUser = async () => {
     if (password !== "") {
-      const deleteAllFavorite = await actions.deleteAllFavorite(password);
+      const deleteAllFavorite = await actions.chekcUser(password);
       if (deleteAllFavorite) {
         actions.deleteUser();
       } else {
